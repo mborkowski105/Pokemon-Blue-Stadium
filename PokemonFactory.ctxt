@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=PokemonFactory
+comment1.params=
+comment1.target=PokemonFactory()
+comment2.params=species
+comment2.target=Pokemon\ createPokemon(java.lang.String)
+numComments=3
