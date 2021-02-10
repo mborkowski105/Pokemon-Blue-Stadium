@@ -18,6 +18,8 @@ public class Pokemon {
     private final int SPD;
     private int currentSpd;
 
+    private int baseSpd;
+
     private int atkStageMultiplier;
     private int defStageMultiplier;
     private int spcStageMultiplier;
@@ -31,7 +33,7 @@ public class Pokemon {
 //    /**
 //     * Constructor for objects of class Pokemon
 //     */
-    public Pokemon(String species, Type type1, Type type2, int hp, int atk, int def, int spc, int spd, Move move1, Move move2, Move move3, Move move4) {
+    public Pokemon(String species, Type type1, Type type2, int hp, int atk, int def, int spc, int spd, int baseSpd, Move move1, Move move2, Move move3, Move move4) {
         this.SPECIES = species;
         this.TYPE1 = type1;
         this.TYPE2 = type2;
@@ -46,6 +48,8 @@ public class Pokemon {
         this.currentSpc = spc;
         this.SPD = spd;
         this.currentSpd = spd;
+
+        this.baseSpd = baseSpd;
 
         this.atkStageMultiplier = 0;
         this.defStageMultiplier = 0;
@@ -98,6 +102,7 @@ public class Pokemon {
     public int getCurrentSpd() {
         return this.currentSpd;
     }
+    public int getBaseSpd() { return this.baseSpd; }
 
     // implement Pokemon helper class?
     protected int getAtkStageMultiplier() {

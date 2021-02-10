@@ -1,26 +1,32 @@
 import java.util.*;
 
 public enum Type {
-    NORMAL (0),
-    FIRE (1),
-    WATER (2),
-    ELECTRIC (3),
-    GRASS (4),
-    ICE (5),
-    FIGHTING (6),
-    POISON (7),
-    GROUND (8),
-    FLYING (9),
-    PSYCHIC (10),
-    BUG (11),
-    ROCK (12),
-    GHOST (13),
-    DRAGON (14);
+    NORMAL (0, "physical"),
+    FIRE (1, "special"),
+    WATER (2, "special"),
+    ELECTRIC (3, "special"),
+    GRASS (4, "special"),
+    ICE (5, "special"),
+    FIGHTING (6, "physical"),
+    POISON (7, "physical"),
+    GROUND (8, "physical"),
+    FLYING (9, "physical"),
+    PSYCHIC (10, "special"),
+    BUG (11, "physical"),
+    ROCK (12, "physical"),
+    GHOST (13, "physical"),
+    DRAGON (14, "special");
 
     private final int id;
+    private final String damageCategory;
 
-    Type (int id) {
+    Type (int id, String damageCategory) {
         this.id = id;
+        this.damageCategory = damageCategory;
+    }
+
+    public String getDamageCategory() {
+        return damageCategory;
     }
 
     private static double getNormalAttackModifier(int id){

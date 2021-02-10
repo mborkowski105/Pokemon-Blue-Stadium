@@ -28,9 +28,9 @@ public class Game
 
         System.out.println(golem.getSpecies() + ": " + golem.getCurrentHp() + " / " + golem.getHp());
         System.out.println(nidoking.getSpecies() + ": " + nidoking.getCurrentHp() + " / " + nidoking.getHp());
-        System.out.println(golem.getSpecies() + " used " + golem.getMove1().getName() + "!");
-        int damage = DamageCalculator.calculate(golem.getMove1(), golem, nidoking);
-        nidoking.damage(damage);
+        System.out.println(nidoking.getSpecies() + " used " + nidoking.getMove2().getName() + "!");
+        int damage = DamageCalculator.calculate(nidoking.getMove2(), nidoking, golem);
+        golem.damage(damage);
         System.out.println(golem.getSpecies() + ": " + golem.getCurrentHp() + " / " + golem.getHp());
         System.out.println(nidoking.getSpecies() + ": " + nidoking.getCurrentHp() + " / " + nidoking.getHp());
 
