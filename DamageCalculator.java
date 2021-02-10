@@ -12,8 +12,9 @@ public abstract class DamageCalculator {
 
         if (attackingPokemon.getType1() == move.getType() || attackingPokemon.getType2() == move.getType()) {
             stab = 1.5;
+            System.out.println("STAB bonus");
         }
 
-        return (int)((((42 * move.getBasePower() * (attackingPokemon.getCurrentSpc() / defendingPokemon.getCurrentSpc()))/ 50)+2)*(stab * modifier));
+        return (int)((((42 * move.getBasePower() * (attackingPokemon.getCurrentAtk() / defendingPokemon.getCurrentDef()))/ 50)+2)*(stab * modifier));
     }
 }

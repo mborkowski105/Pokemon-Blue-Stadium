@@ -1,3 +1,6 @@
+import java.util.List;
+import java.util.ArrayList;
+
 public class Pokemon {
     // instance variables
     private String SPECIES;
@@ -23,10 +26,12 @@ public class Pokemon {
     private Status status1;
     private int status1Counter;
 
+    private List<Move> moves;
+
 //    /**
 //     * Constructor for objects of class Pokemon
 //     */
-    public Pokemon(String species, Type type1, Type type2, int hp, int atk, int def, int spc, int spd) {
+    public Pokemon(String species, Type type1, Type type2, int hp, int atk, int def, int spc, int spd, Move move1, Move move2, Move move3, Move move4) {
         this.SPECIES = species;
         this.TYPE1 = type1;
         this.TYPE2 = type2;
@@ -46,6 +51,12 @@ public class Pokemon {
         this.defStageMultiplier = 0;
         this.spcStageMultiplier = 0;
         this.spdStageMultiplier = 0;
+
+        this.moves = new ArrayList<Move>();
+        moves.add(move1);
+        moves.add(move2);
+        moves.add(move3);
+        moves.add(move4);
     }
 
     public String getSpecies() {
@@ -217,5 +228,18 @@ public class Pokemon {
     }
     protected void resetStatus1Counter() {
         status1Counter = 0;
+    }
+
+    protected Move getMove1() {
+        return moves.get(0);
+    }
+    protected Move getMove2() {
+        return moves.get(1);
+    }
+    protected Move getMove3() {
+        return moves.get(2);
+    }
+    protected Move getMove4() {
+        return moves.get(3);
     }
 }
