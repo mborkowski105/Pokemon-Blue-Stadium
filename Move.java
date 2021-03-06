@@ -8,11 +8,13 @@ public class Move {
     private int currentPp;
     private final int PRIORITY;
 
+    private final SecondaryEffect SECONDARY_EFFECT;
+
     /**
      * Constructor for objects of class Move
      */
-    public Move(String name, Type type, int basePower, int accuracy, int maxPp, int priority) {
-        // initialise instance variables
+
+    public Move(String name, Type type, int basePower, int accuracy, int maxPp, int priority, SecondaryEffect secondaryEffect) {
         this.NAME = name;
         this.TYPE = type;
         this.BASE_POWER = basePower;
@@ -20,6 +22,7 @@ public class Move {
         this.MAX_PP = maxPp;
         this.currentPp = maxPp;
         this.PRIORITY = priority;
+        this.SECONDARY_EFFECT = secondaryEffect;
     }
 
     public String getName() {
@@ -42,6 +45,9 @@ public class Move {
     }
     public int getPriority() {
         return PRIORITY;
+    }
+    public SecondaryEffect getSecondaryEffect() {
+        return SECONDARY_EFFECT;
     }
     public void decrementCurrentPp() {
         if (currentPp > 0) {

@@ -1,3 +1,5 @@
+// consider making this class into an interface
+
 public enum Status {
     POISON ("PSN"),
     BAD_POISON ("PSN"),

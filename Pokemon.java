@@ -1,6 +1,8 @@
 import java.util.List;
 import java.util.ArrayList;
 
+// TODO override/implement toString method
+
 public class Pokemon {
     // instance variables
     private String SPECIES;

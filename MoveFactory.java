@@ -5,35 +5,42 @@ public abstract class MoveFactory {
 
         switch (name) {
             case "BLIZZARD": {
-                move = new Move(name, Type.ICE, 120, 90, 5, 0);
+                SecondaryEffect secondaryEffect = new SecondaryStatus(10, false, Status.FREEZE);
+                move = new Move(name, Type.ICE, 120, 90, 5, 0, secondaryEffect);
                 break;
             }
             case "BODY SLAM": {
-                move = new Move(name, Type.NORMAL, 85, 100, 15, 0);
+                SecondaryEffect secondaryEffect = new SecondaryStatus(30, false, Status.PARALYSIS);
+                move = new Move(name, Type.NORMAL, 85, 100, 15, 0, secondaryEffect);
                 break;
             }
             case "EARTHQUAKE": {
-                move = new Move(name, Type.GROUND, 100, 100, 10, 0);
+                move = new Move(name, Type.GROUND, 100, 100, 10, 0, null);
                 break;
             }
             case "EXPLOSION": {
-                move = new Move(name, Type.NORMAL, 170, 100, 5, 0);
+                //add self-destruct
+                move = new Move(name, Type.NORMAL, 170, 100, 5, 0, null);
                 break;
             }
             case "FIRE BLAST": {
-                move = new Move(name, Type.FIRE, 120, 85, 5, 0);
+                SecondaryEffect secondaryEffect = new SecondaryStatus(10, false, Status.BURN);
+                move = new Move(name, Type.FIRE, 120, 85, 5, 0, secondaryEffect);
                 break;
             }
             case "ROCK SLIDE": {
-                move = new Move(name, Type.ROCK, 75, 90, 10, 0);
+                // add flinch
+                move = new Move(name, Type.ROCK, 75, 90, 10, 0, null);
                 break;
             }
             case "THUNDERBOLT": {
-                move = new Move(name, Type.ELECTRIC, 95, 100, 15, 0);
+                SecondaryEffect secondaryEffect = new SecondaryStatus(10, false, Status.PARALYSIS);
+                move = new Move(name, Type.ELECTRIC, 95, 100, 15, 0, secondaryEffect);
                 break;
             }
             case "THUNDER": {
-                move = new Move(name, Type.ELECTRIC, 120, 70, 10, 0);
+                SecondaryEffect secondaryEffect = new SecondaryStatus(10, false, Status.PARALYSIS);
+                move = new Move(name, Type.ELECTRIC, 120, 70, 10, 0, secondaryEffect);
                 break;
             }
             default: {

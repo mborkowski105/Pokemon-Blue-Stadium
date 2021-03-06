@@ -1,5 +1,7 @@
 import java.util.*;
 
+// TODO split class up, extract damage charts into utility class (can be versioned by Gen 1-8 types)
+
 public enum Type {
     NORMAL (0, "physical"),
     FIRE (1, "special"),

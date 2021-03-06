@@ -23,17 +23,11 @@ public class Game
 //        System.out.println(gengar.getStatus1() + ", " + gengar.getStatus1Counter() + " turn");
 //        System.out.println(gengar.getCurrentSpc() + " / " + gengar.getSpc());
 
-        Pokemon golem = requestNewRentalPokemon("GOLEM");
-        Pokemon nidoking = requestNewRentalPokemon("NIDOKING");
+        Trainer trainer1 = new Trainer(requestNewRentalPokemon("GOLEM"), null, null, null, null, null);
+        Trainer trainer2 = new Trainer(requestNewRentalPokemon("NIDOKING"), null, null, null, null, null);
 
-        System.out.println(golem.getSpecies() + ": " + golem.getCurrentHp() + " / " + golem.getHp());
-        System.out.println(nidoking.getSpecies() + ": " + nidoking.getCurrentHp() + " / " + nidoking.getHp());
-        System.out.println(nidoking.getSpecies() + " used " + nidoking.getMove2().getName() + "!");
-        int damage = DamageCalculator.calculate(nidoking.getMove2(), nidoking, golem);
-        golem.damage(damage);
-        System.out.println(golem.getSpecies() + ": " + golem.getCurrentHp() + " / " + golem.getHp());
-        System.out.println(nidoking.getSpecies() + ": " + nidoking.getCurrentHp() + " / " + nidoking.getHp());
-
+        Battle battle = new Battle(trainer1, trainer2);
+        battle.battle();
     }
 
     public static Pokemon requestNewRentalPokemon(String species) {

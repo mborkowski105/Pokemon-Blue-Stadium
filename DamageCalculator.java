@@ -1,3 +1,5 @@
+// TODO turn abstract DamageCalculator class into interface (can be versioned by Gen 1-8 formulas)
+
 public abstract class DamageCalculator {
     public static int calculate(Move move, Pokemon attackingPokemon, Pokemon defendingPokemon){
         double stab = 1.0;
@@ -40,8 +42,6 @@ public abstract class DamageCalculator {
             level = level * 2;
         }
 
-//        return (int)((((42 * basePower * (attackingStat / defendingStat))/ 50)+2)*(stab * modifier));
         return (int)((Math.min((int)((int)(((2.0 + (int)(0.4 * level)) * attackingStat * basePower) / defendingStat) / 50.0) , 997.0) + 2.0) * multiplier);
-
     }
 }
