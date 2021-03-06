@@ -5,6 +5,7 @@ public class SecondaryStatModifier implements SecondaryEffect {
     private final String STAT;
     private final int MODIFIER;
 
+    // I think String stat seems like an unsafe way to pass around the stat to be modified - could be separated into classes
     public SecondaryStatModifier(int probability, boolean targetSelf, String stat, int modifier){
         this.PROBABILITY = probability;
         this.TARGET_SELF = targetSelf;
@@ -21,7 +22,7 @@ public class SecondaryStatModifier implements SecondaryEffect {
     public String getStat(){
         return STAT;
     }
-    public int modifier(){
+    public int getModifier(){
         return MODIFIER;
     }
 

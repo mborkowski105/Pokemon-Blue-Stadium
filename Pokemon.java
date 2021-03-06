@@ -110,46 +110,30 @@ public class Pokemon {
     protected int getAtkStageMultiplier() {
         return atkStageMultiplier;
     }
-    protected void incrementAtkStageMultiplier(int num) {
+    protected void changeAtkStageMultiplierBy(int num) {
         atkStageMultiplier += num;
-        currentAtk = getStatAlteration(ATK, atkStageMultiplier);
-    }
-    protected void decrementAtkStageMultiplier(int num) {
-        atkStageMultiplier -= num;
         currentAtk = getStatAlteration(ATK, atkStageMultiplier);
     }
 
     protected int getDefStageMultiplier() {
         return defStageMultiplier;
     }
-    protected void incrementDefStageMultiplier(int num) {
+    protected void changeDefStageMultiplierBy(int num) {
         defStageMultiplier += num;
-        currentDef = getStatAlteration(DEF, defStageMultiplier);
-    }
-    protected void decrementDefStageMultiplier(int num) {
-        defStageMultiplier -= num;
         currentDef = getStatAlteration(DEF, defStageMultiplier);
     }
     protected int getSpcStageMultiplier() {
         return spcStageMultiplier;
     }
-    protected void incrementSpcStageMultiplier(int num) {
+    protected void changeSpcStageMultiplierBy(int num) {
         spcStageMultiplier += num;
-        currentSpc = getStatAlteration(SPC, spcStageMultiplier);
-    }
-    protected void decrementSpcStageMultiplier(int num) {
-        spcStageMultiplier -= num;
         currentSpc = getStatAlteration(SPC, spcStageMultiplier);
     }
     protected int getSpdStageMultiplier() {
         return spdStageMultiplier;
     }
-    protected void incrementSpdStageMultiplier(int num) {
+    protected void changeSpdStageMultiplierBy(int num) {
         spdStageMultiplier += num;
-        currentSpd = getStatAlteration(SPD, spdStageMultiplier);
-    }
-    protected void decrementSpdStageMultiplier(int num) {
-        spdStageMultiplier -= num;
         currentSpd = getStatAlteration(SPD, spdStageMultiplier);
     }
     private int getStatAlteration(int maxStat, int stageMultiplier) {

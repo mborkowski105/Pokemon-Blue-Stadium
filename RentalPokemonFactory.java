@@ -4,6 +4,10 @@ public abstract class RentalPokemonFactory {
         Pokemon pokemon;
 
         switch (species) {
+            case "CHARIZARD": {
+                pokemon = PokemonFactory.createPokemon("CHARIZARD", "FIRE BLAST", "SWORDS DANCE", "EARTHQUAKE", "BODY SLAM");
+                break;
+            }
             case "NIDOKING": {
                 pokemon = PokemonFactory.createPokemon("NIDOKING", "EARTHQUAKE", "BLIZZARD", "THUNDER", "BODY SLAM");
                 break;

@@ -1,7 +1,7 @@
 // TODO turn abstract DamageCalculator class into interface (can be versioned by Gen 1-8 formulas)
 
 public abstract class DamageCalculator {
-    public static int calculate(Move move, Pokemon attackingPokemon, Pokemon defendingPokemon){
+    public static int calculate(Pokemon attackingPokemon, Move move, Pokemon defendingPokemon){
         double stab = 1.0;
         double typeModifier = Type.getDamageModifier(move.getType(), defendingPokemon.getType1(), defendingPokemon.getType2());
         double basePower = move.getBasePower();
@@ -10,8 +10,6 @@ public abstract class DamageCalculator {
         double level = 100.0;
         double randomNumber = (217.0 + (Math.random() * 38.0)) / 255.0;
         double criticalHitProbability = attackingPokemon.getBaseSpd() * 100.0 / 512.0;
-
-        double multiplier = stab * typeModifier * randomNumber;
 
         if (move.getType().getDamageCategory() == "physical") {
             attackingStat = attackingPokemon.getCurrentAtk();
@@ -41,6 +39,8 @@ public abstract class DamageCalculator {
             System.out.println("Critical hit!");
             level = level * 2;
         }
+
+        double multiplier = stab * typeModifier * randomNumber;
 
         return (int)((Math.min((int)((int)(((2.0 + (int)(0.4 * level)) * attackingStat * basePower) / defendingStat) / 50.0) , 997.0) + 2.0) * multiplier);
     }

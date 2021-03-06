@@ -24,7 +24,7 @@ public class Game
 //        System.out.println(gengar.getCurrentSpc() + " / " + gengar.getSpc());
 
         Trainer trainer1 = new Trainer(requestNewRentalPokemon("GOLEM"), null, null, null, null, null);
-        Trainer trainer2 = new Trainer(requestNewRentalPokemon("NIDOKING"), null, null, null, null, null);
+        Trainer trainer2 = new Trainer(requestNewRentalPokemon("CHARIZARD"), null, null, null, null, null);
 
         Battle battle = new Battle(trainer1, trainer2);
         battle.battle();

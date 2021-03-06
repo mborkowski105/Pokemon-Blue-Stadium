@@ -33,6 +33,11 @@ public abstract class MoveFactory {
                 move = new Move(name, Type.ROCK, 75, 90, 10, 0, null);
                 break;
             }
+            case "SWORDS DANCE": {
+                SecondaryEffect secondaryEffect = new SecondaryStatModifier(100, false, "ATK", 2);
+                move = new Move(name, Type.NORMAL, 0, 100, 30, 0, secondaryEffect);
+                break;
+            }
             case "THUNDERBOLT": {
                 SecondaryEffect secondaryEffect = new SecondaryStatus(10, false, Status.PARALYSIS);
                 move = new Move(name, Type.ELECTRIC, 95, 100, 15, 0, secondaryEffect);
