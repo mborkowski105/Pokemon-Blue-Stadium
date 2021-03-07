@@ -2,6 +2,12 @@
 
 public abstract class DamageCalculator {
     public static int calculate(Pokemon attackingPokemon, Move move, Pokemon defendingPokemon){
+
+        // damage by level: for Seismic Toss and Night Shade, just do 100 damage, ignore type chart
+        if (move.getSecondaryEffect() instanceof SecondaryDamageByLevel){
+            return 100;
+        }
+
         double stab = 1.0;
         double typeModifier = Type.getDamageModifier(move.getType(), defendingPokemon.getType1(), defendingPokemon.getType2());
         double basePower = move.getBasePower();
@@ -18,6 +24,10 @@ public abstract class DamageCalculator {
         else {
             attackingStat = attackingPokemon.getCurrentSpc();
             defendingStat = defendingPokemon.getCurrentSpc();
+        }
+
+        if (move.getSecondaryEffect() instanceof SecondaryOHKO){
+            defendingStat = defendingStat / 2;
         }
 
         if (typeModifier > 1.0) {

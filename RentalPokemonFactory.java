@@ -8,12 +8,36 @@ public abstract class RentalPokemonFactory {
                 pokemon = PokemonFactory.createPokemon("CHARIZARD", "FIRE BLAST", "SWORDS DANCE", "EARTHQUAKE", "BODY SLAM");
                 break;
             }
+            case "RAICHU": {
+                pokemon = PokemonFactory.createPokemon("RAICHU", "THUNDERBOLT", "SURF", "THUNDER WAVE", "AGILITY");
+                break;
+            }
             case "NIDOKING": {
                 pokemon = PokemonFactory.createPokemon("NIDOKING", "EARTHQUAKE", "BLIZZARD", "THUNDER", "BODY SLAM");
                 break;
             }
             case "GOLEM": {
                 pokemon = PokemonFactory.createPokemon("GOLEM", "EARTHQUAKE", "ROCK SLIDE", "EXPLOSION", "FIRE BLAST");
+                break;
+            }
+            case "ALAKAZAM": {
+                pokemon = PokemonFactory.createPokemon("ALAKAZAM", "PSYCHIC", "RECOVER", "THUNDER WAVE", "SEISMIC TOSS");
+                break;
+            }
+            case "GENGAR": {
+                pokemon = PokemonFactory.createPokemon("GENGAR", "THUNDERBOLT", "HYPNOSIS", "EXPLOSION", "NIGHT SHADE");
+                break;
+            }
+            case "CHANSEY": {
+                pokemon = PokemonFactory.createPokemon("CHANSEY", "THUNDERBOLT", "ICE BEAM", "SOFT-BOILED", "THUNDER WAVE");
+                break;
+            }
+            case "STARMIE": {
+                pokemon = PokemonFactory.createPokemon("STARMIE", "SURF", "THUNDERBOLT", "RECOVER", "THUNDER WAVE");
+                break;
+            }
+            case "ZAPDOS": {
+                pokemon = PokemonFactory.createPokemon("ZAPDOS", "THUNDERBOLT", "DRILL PECK", "THUNDER WAVE", "AGILITY");
                 break;
             }
             default: {

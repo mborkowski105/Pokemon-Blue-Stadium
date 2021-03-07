@@ -21,6 +21,10 @@ public abstract class PokemonFactory {
                 pokemon = new Pokemon(species, Type.WATER, null, 361, 264, 298, 268, 254, 78, move1, move2, move3, move4);
                 break;
             }
+            case "RAICHU": {
+                pokemon = new Pokemon(species, Type.ELECTRIC, null, 323, 278,208,278,298, 100, move1, move2, move3, move4);
+                break;
+            }
             case "NIDOQUEEN": {
                 pokemon = new Pokemon(species, Type.GROUND, Type.POISON, 383, 262, 272, 248, 250, 76, move1, move2, move3, move4);
                 break;
@@ -45,6 +49,10 @@ public abstract class PokemonFactory {
                 pokemon = new Pokemon(species, Type.NORMAL, null, 703, 108, 108, 308, 198, 50, move1, move2, move3, move4);
                 break;
             }
+            case "STARMIE": {
+                pokemon = new Pokemon(species, Type.WATER, Type.PSYCHIC,323,248, 268, 298, 328, 115, move1, move2, move3, move4);
+                break;
+            }
             case "GYARADOS": {
                 pokemon = new Pokemon(species, Type.WATER, Type.FLYING, 393, 348, 256, 298, 260, 81, move1, move2, move3, move4);
                 break;
@@ -64,6 +72,9 @@ public abstract class PokemonFactory {
             case "SNORLAX": {
                 pokemon = new Pokemon(species, Type.NORMAL, null, 523, 318, 228, 228, 158, 30, move1, move2, move3, move4);
                 break;
+            }
+            case "ZAPDOS": {
+                pokemon = new Pokemon(species, Type.ELECTRIC, Type.FLYING,383, 278, 268, 348, 298, 100, move1, move2, move3, move4);
             }
             case "DRAGONITE": {
                 pokemon = new Pokemon(species, Type.DRAGON, Type.FLYING, 385, 366, 288, 298, 258, 80, move1, move2, move3, move4);

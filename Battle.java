@@ -13,13 +13,13 @@ public class Battle {
 
         Pokemon pokemon1 = TRAINER2.getActivePokemon();
         Pokemon pokemon2 = TRAINER1.getActivePokemon();
-        Move move = TRAINER2.getActivePokemon().getMove2();
+        Move move = TRAINER2.getActivePokemon().getMove1();
 
         //extract below into some sort of messaging function?
         System.out.println(pokemon1.getSpecies() + " used " + move.getName() + "!");
 
         // need to include preliminary check for 0x effective to avoid secondary effect taking place
-        boolean miss = calculateMiss(move.getSecondaryEffect().getProbability());
+        boolean miss = calculateMiss(move.getAccuracy());
         if (miss == false) {
             //check to see if move is of non-damaging category
             if (move.getBasePower() > 0) {
@@ -43,27 +43,65 @@ public class Battle {
                     //below line looks messy
                     switch (((SecondaryStatModifier) move.getSecondaryEffect()).getStat()){
                         case "ATK": {
-                            pokemon1.changeAtkStageMultiplierBy(change);
+                            if (move.getSecondaryEffect().targetSelf() == true){
+                                pokemon1.changeAtkStageMultiplierBy(change);
+                            }
+                            else {
+                                pokemon2.changeAtkStageMultiplierBy(change);
+                            }
                             break;
                         }
                         case "DEF": {
-                            pokemon1.changeDefStageMultiplierBy(change);
+                            if (move.getSecondaryEffect().targetSelf() == true) {
+                                pokemon1.changeDefStageMultiplierBy(change);
+                            }
+                            else {
+                                pokemon2.changeDefStageMultiplierBy(change);
+                            }
                             break;
                         }
                         case "SPC": {
-                            pokemon1.changeSpcStageMultiplierBy(change);
+                            if (move.getSecondaryEffect().targetSelf() == true) {
+                                pokemon1.changeSpcStageMultiplierBy(change);
+                            }
+                            else {
+                                pokemon2.changeSpcStageMultiplierBy(change);
+                            }
                             break;
                         }
                         case "SPD": {
-                            pokemon1.changeSpdStageMultiplierBy(change);
+                            if (move.getSecondaryEffect().targetSelf() == true) {
+                                pokemon1.changeSpdStageMultiplierBy(change);
+                            }
+                            else {
+                                pokemon2.changeSpdStageMultiplierBy(change);
+                            }
                             break;
                         }
                     }
                     // make messages an attribute of SecondaryEffect
-                    System.out.println(pokemon1.getSpecies() + "'s " + ((SecondaryStatModifier) move.getSecondaryEffect()).getStat() + "was changed");
+                    System.out.println(pokemon2.getSpecies() + "'s " + ((SecondaryStatModifier) move.getSecondaryEffect()).getStat() + " was changed");
                     //implement counter for sleep or toxic
-                    System.out.println(pokemon1.getSpecies() + "'s ATK: " + pokemon1.getCurrentAtk() + " / " + pokemon1.getAtk());
+                    System.out.println(pokemon2.getSpecies() + "'s SPC: " + pokemon2.getCurrentSpc() + " / " + pokemon2.getSpc());
                 }
+            }
+            // OHKO section - self-destruct or OHKO moves
+            // implement support for the OHKO moves like Guillotine or Fissure
+            else if (move.getSecondaryEffect() instanceof SecondaryOHKO){
+                if (move.getSecondaryEffect().targetSelf() == true){
+                    pokemon1.damage(pokemon1.getCurrentHp());
+                    System.out.println(pokemon1.getSpecies() + " self-destructed!");
+                }
+            }
+            // Recovery section
+            else if (move.getSecondaryEffect() instanceof SecondaryRecovery){
+                if (pokemon1.getCurrentHp() * 2 >= pokemon1.getHp()){
+                    pokemon1.resetHp();
+                }
+                else {
+                    pokemon1.heal((int) pokemon1.getHp() / 2);
+                }
+                System.out.println(pokemon1.getSpecies() + " recovered HP!");
             }
         }
 
