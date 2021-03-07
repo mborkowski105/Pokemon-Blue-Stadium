@@ -4,6 +4,16 @@ public abstract class MoveFactory {
         Move move;
 
         switch (name) {
+            case "ACID ARMOR": {
+                SecondaryEffect secondaryEffect = new SecondaryStatModifier(100, true, "DEF", 2);
+                move = new Move(name, Type.POISON, 0, 100, 40, 0, secondaryEffect);
+                break;
+            }
+            case "AMNESIA": {
+                SecondaryEffect secondaryEffect = new SecondaryStatModifier(100, true, "SPC", 2);
+                move = new Move(name, Type.PSYCHIC, 0, 100, 20, 0, secondaryEffect);
+                break;
+            }
             case "AGILITY": {
                 SecondaryEffect secondaryEffect = new SecondaryStatModifier(100, true, "SPD", 2);
                 move = new Move(name, Type.PSYCHIC, 0, 100, 30, 0, secondaryEffect);
@@ -32,9 +42,18 @@ public abstract class MoveFactory {
                 move = new Move(name, Type.NORMAL, 170, 100, 5, 0, secondaryEffect);
                 break;
             }
+            case "HYDRO PUMP": {
+                move = new Move(name, Type.WATER, 120, 80, 5, 0, null);
+                break;
+            }
             case "HYPNOSIS": {
                 SecondaryEffect secondaryEffect = new SecondaryStatus(100, false, Status.SLEEP);
                 move = new Move(name, Type.PSYCHIC, 0, 60, 20, 0, secondaryEffect);
+                break;
+            }
+            case "ICE BEAM": {
+                SecondaryEffect secondaryEffect = new SecondaryStatus(10, false, Status.FREEZE);
+                move = new Move(name, Type.ICE, 95, 90, 10, 0, secondaryEffect);
                 break;
             }
             case "FIRE BLAST": {
@@ -52,9 +71,19 @@ public abstract class MoveFactory {
                 move = new Move(name, Type.PSYCHIC, 90, 100, 10, 0, secondaryEffect);
                 break;
             }
+            case "RAZOR LEAF": {
+                SecondaryEffect secondaryEffect = new SecondaryCriticalHit(100, false);
+                move = new Move(name, Type.GRASS, 55, 95, 25, 0, secondaryEffect);
+                break;
+            }
             case "RECOVER": {
                 SecondaryEffect secondaryEffect = new SecondaryRecovery(100, true);
                 move = new Move(name, Type.NORMAL, 0, 100, 20, 0, secondaryEffect);
+                break;
+            }
+            case "REST": {
+                SecondaryEffect secondaryEffect = new SecondaryStatus(100, true, Status.REST);
+                move = new Move(name, Type.PSYCHIC, 0, 100, 10, 0, secondaryEffect);
                 break;
             }
             case "ROCK SLIDE": {
@@ -65,6 +94,16 @@ public abstract class MoveFactory {
             case "SEISMIC TOSS": {
                 SecondaryEffect secondaryEffect = new SecondaryDamageByLevel(100, false);
                 move = new Move(name, Type.NORMAL, 1, 100, 20, 0, secondaryEffect);
+                break;
+            }
+            case "SLASH": {
+                SecondaryEffect secondaryEffect = new SecondaryCriticalHit(100, false);
+                move = new Move(name, Type.NORMAL, 70, 100, 20, 0, secondaryEffect);
+                break;
+            }
+            case "SLEEP POWDER": {
+                SecondaryEffect secondaryEffect = new SecondaryStatus(100, false, Status.SLEEP);
+                move = new Move(name, Type.GRASS, 0, 75, 15, 0, secondaryEffect);
                 break;
             }
             case "SOFT-BOILED": {

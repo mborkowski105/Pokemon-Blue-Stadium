@@ -15,8 +15,17 @@ public abstract class DamageCalculator {
         double defendingStat;
         double level = 100.0;
         double randomNumber = (217.0 + (Math.random() * 38.0)) / 255.0;
-        double criticalHitProbability = attackingPokemon.getBaseSpd() * 100.0 / 512.0;
+        double criticalHitProbability;
 
+        // critical hit
+        if (move.getSecondaryEffect() instanceof SecondaryCriticalHit){
+            criticalHitProbability = attackingPokemon.getBaseSpd() * 100.0 / 64.0;
+        }
+        else {
+            criticalHitProbability = attackingPokemon.getBaseSpd() * 100.0 / 512.0;
+        }
+
+        // physical/special
         if (move.getType().getDamageCategory() == "physical") {
             attackingStat = attackingPokemon.getCurrentAtk();
             defendingStat = defendingPokemon.getCurrentDef();
@@ -30,6 +39,7 @@ public abstract class DamageCalculator {
             defendingStat = defendingStat / 2;
         }
 
+        //type modifier section
         if (typeModifier > 1.0) {
             System.out.println("It's super effective! x" + typeModifier);
         }
@@ -45,6 +55,7 @@ public abstract class DamageCalculator {
             System.out.println("STAB bonus");
         }
 
+        //random number for ranges
         if (Math.random() * 100 < criticalHitProbability) {
             System.out.println("Critical hit!");
             level = level * 2;

@@ -6,11 +6,20 @@ public enum Status {
     PARALYSIS ("PAR"),
     BURN ("BRN"),
     FREEZE ("FRZ"),
-    SLEEP ("SLP");
+    SLEEP ("SLP"),
+    REST ("SLP"),
+    FAINT ("FNT");
 
-    private final String abbreviated;
+    private final String ABBREVIATED;
 
     Status(String abbreviated) {
-        this.abbreviated = abbreviated;
+        this.ABBREVIATED = abbreviated;
+    }
+
+    public String getAbbreviated(){
+        if (this.ABBREVIATED == null){
+            return "";
+        }
+        return this.ABBREVIATED;
     }
 }

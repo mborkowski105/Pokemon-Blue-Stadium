@@ -188,6 +188,7 @@ public class Pokemon {
     protected int damage(int value) {
         if (currentHp - value < 0) {
             currentHp = 0;
+            setStatus1(Status.FAINT);
         }
         else {
             currentHp = currentHp - value;

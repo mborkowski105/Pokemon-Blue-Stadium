@@ -4,8 +4,16 @@ public abstract class RentalPokemonFactory {
         Pokemon pokemon;
 
         switch (species) {
+            case "VENUSAUR": {
+                pokemon = PokemonFactory.createPokemon("VENUSAUR", "RAZOR LEAF", "SLEEP POWDER", "BODY SLAM", "SWORDS DANCE");
+                break;
+            }
             case "CHARIZARD": {
                 pokemon = PokemonFactory.createPokemon("CHARIZARD", "FIRE BLAST", "SWORDS DANCE", "EARTHQUAKE", "BODY SLAM");
+                break;
+            }
+            case "BLASTOISE": {
+                pokemon = PokemonFactory.createPokemon("BLASTOISE", "HYDRO PUMP", "BLIZZARD", "EARTHQUAKE", "REST");
                 break;
             }
             case "RAICHU": {
@@ -34,6 +42,14 @@ public abstract class RentalPokemonFactory {
             }
             case "STARMIE": {
                 pokemon = PokemonFactory.createPokemon("STARMIE", "SURF", "THUNDERBOLT", "RECOVER", "THUNDER WAVE");
+                break;
+            }
+            case "VAPOREON": {
+                pokemon = PokemonFactory.createPokemon("VAPOREON", "SURF", "BLIZZARD", "ACID ARMOR", "REST");
+                break;
+            }
+            case "SNORLAX": {
+                pokemon = PokemonFactory.createPokemon("SNORLAX", "BODY SLAM", "AMNESIA", "REST", "ICE BEAM");
                 break;
             }
             case "ZAPDOS": {

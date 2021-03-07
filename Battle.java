@@ -28,12 +28,20 @@ public class Battle {
 
             //secondary effects
             //split these up into steps!
+            //Status moves
             if (move.getSecondaryEffect() instanceof SecondaryStatus){
                 if (calculateMiss(move.getSecondaryEffect().getProbability()) == false){
                     //below line looks messy
-                    pokemon2.setStatus1((((SecondaryStatus) move.getSecondaryEffect()).getStatus()));
-                    System.out.println("The opponent has a nasty case of " + pokemon2.getStatus1());
-                    //implement counter for sleep or toxic
+                    if (((SecondaryStatus) move.getSecondaryEffect()).getStatus() == Status.REST) {
+                        pokemon1.setStatus1(Status.REST);
+                        pokemon1.resetHp();
+                        System.out.println(pokemon1.getSpecies() + " went to sleep!");
+                    }
+                    else {
+                        pokemon2.setStatus1((((SecondaryStatus) move.getSecondaryEffect()).getStatus()));
+                        System.out.println("The opponent has a nasty case of " + pokemon2.getStatus1());
+                        //implement counter for sleep or toxic
+                    }
                 }
             }
             //secondaryStatModifier section - check target of move!
@@ -134,9 +142,9 @@ public class Battle {
     public void display(){
         // displays species and HP
         System.out.println(TRAINER1.getActivePokemon().getSpecies() + ": " + TRAINER1.getActivePokemon().getCurrentHp() + " / " + TRAINER1.getActivePokemon().getHp());
-        System.out.println(TRAINER1.getActivePokemon().getStatus1());
+        System.out.println(TRAINER1.getActivePokemon().getStatus1() == null ? "" : TRAINER1.getActivePokemon().getStatus1().getAbbreviated());
         System.out.println(TRAINER2.getActivePokemon().getSpecies() + ": " + TRAINER2.getActivePokemon().getCurrentHp() + " / " + TRAINER2.getActivePokemon().getHp());
-        System.out.println(TRAINER2.getActivePokemon().getStatus1());
+        System.out.println(TRAINER2.getActivePokemon().getStatus1() == null ? "" : TRAINER2.getActivePokemon().getStatus1().getAbbreviated());
     }
 
     public void modifyStat(Pokemon pokemon, SecondaryStatModifier secondaryStatModifier){
