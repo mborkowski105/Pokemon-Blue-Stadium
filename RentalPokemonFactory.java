@@ -24,12 +24,16 @@ public abstract class RentalPokemonFactory {
                 pokemon = PokemonFactory.createPokemon("NIDOKING", "EARTHQUAKE", "BLIZZARD", "THUNDER", "BODY SLAM");
                 break;
             }
-            case "GOLEM": {
-                pokemon = PokemonFactory.createPokemon("GOLEM", "EARTHQUAKE", "ROCK SLIDE", "EXPLOSION", "FIRE BLAST");
+            case "DUGTRIO": {
+                pokemon = PokemonFactory.createPokemon("DUGTRIO", "EARTHQUAKE", "ROCK SLIDE", "BODY SLAM", "TOXIC");
                 break;
             }
             case "ALAKAZAM": {
                 pokemon = PokemonFactory.createPokemon("ALAKAZAM", "PSYCHIC", "RECOVER", "THUNDER WAVE", "SEISMIC TOSS");
+                break;
+            }
+            case "GOLEM": {
+                pokemon = PokemonFactory.createPokemon("GOLEM", "EARTHQUAKE", "ROCK SLIDE", "EXPLOSION", "FIRE BLAST");
                 break;
             }
             case "GENGAR": {

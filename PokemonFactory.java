@@ -33,6 +33,10 @@ public abstract class PokemonFactory {
                 pokemon = new Pokemon(species, Type.GROUND, Type.POISON, 365, 282, 252, 248, 268, 85, move1, move2, move3, move4);
                 break;
             }
+            case "DUGTRIO": {
+                pokemon = new Pokemon(species, Type.GROUND, null, 273,258, 198, 238, 338, 120, move1, move2, move3, move4);
+                break;
+            }
             case "ALAKAZAM": {
                 pokemon = new Pokemon(species, Type.PSYCHIC, null, 313, 198, 188, 368, 338, 120, move1, move2, move3, move4);
                 break;

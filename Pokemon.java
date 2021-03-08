@@ -234,4 +234,7 @@ public class Pokemon {
     protected Move getMove4() {
         return moves.get(3);
     }
+    protected List<Move> getMoves(){
+        return moves;
+    }
 }

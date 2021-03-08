@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Battle {
     private final Trainer TRAINER1;
     private final Trainer TRAINER2;
@@ -10,109 +12,7 @@ public class Battle {
     // switch parameters back to individual trainers, or split this method up into single turn method
     public void battle(){
         display();
-
-        Pokemon pokemon1 = TRAINER2.getActivePokemon();
-        Pokemon pokemon2 = TRAINER1.getActivePokemon();
-        Move move = TRAINER2.getActivePokemon().getMove1();
-
-        //extract below into some sort of messaging function?
-        System.out.println(pokemon1.getSpecies() + " used " + move.getName() + "!");
-
-        // need to include preliminary check for 0x effective to avoid secondary effect taking place
-        boolean miss = calculateMiss(move.getAccuracy());
-        if (miss == false) {
-            //check to see if move is of non-damaging category
-            if (move.getBasePower() > 0) {
-                int damage = attack(pokemon1, move, pokemon2);
-            }
-
-            //secondary effects
-            //split these up into steps!
-            //Status moves
-            if (move.getSecondaryEffect() instanceof SecondaryStatus){
-                if (calculateMiss(move.getSecondaryEffect().getProbability()) == false){
-                    //below line looks messy
-                    if (((SecondaryStatus) move.getSecondaryEffect()).getStatus() == Status.REST) {
-                        pokemon1.setStatus1(Status.REST);
-                        pokemon1.resetHp();
-                        System.out.println(pokemon1.getSpecies() + " went to sleep!");
-                    }
-                    else {
-                        pokemon2.setStatus1((((SecondaryStatus) move.getSecondaryEffect()).getStatus()));
-                        System.out.println("The opponent has a nasty case of " + pokemon2.getStatus1());
-                        //implement counter for sleep or toxic
-                    }
-                }
-            }
-            //secondaryStatModifier section - check target of move!
-            else if (move.getSecondaryEffect() instanceof SecondaryStatModifier){
-                if (calculateMiss(move.getSecondaryEffect().getProbability()) == false){
-                    int change = ((SecondaryStatModifier) move.getSecondaryEffect()).getModifier();
-                    //below line looks messy
-                    switch (((SecondaryStatModifier) move.getSecondaryEffect()).getStat()){
-                        case "ATK": {
-                            if (move.getSecondaryEffect().targetSelf() == true){
-                                pokemon1.changeAtkStageMultiplierBy(change);
-                            }
-                            else {
-                                pokemon2.changeAtkStageMultiplierBy(change);
-                            }
-                            break;
-                        }
-                        case "DEF": {
-                            if (move.getSecondaryEffect().targetSelf() == true) {
-                                pokemon1.changeDefStageMultiplierBy(change);
-                            }
-                            else {
-                                pokemon2.changeDefStageMultiplierBy(change);
-                            }
-                            break;
-                        }
-                        case "SPC": {
-                            if (move.getSecondaryEffect().targetSelf() == true) {
-                                pokemon1.changeSpcStageMultiplierBy(change);
-                            }
-                            else {
-                                pokemon2.changeSpcStageMultiplierBy(change);
-                            }
-                            break;
-                        }
-                        case "SPD": {
-                            if (move.getSecondaryEffect().targetSelf() == true) {
-                                pokemon1.changeSpdStageMultiplierBy(change);
-                            }
-                            else {
-                                pokemon2.changeSpdStageMultiplierBy(change);
-                            }
-                            break;
-                        }
-                    }
-                    // make messages an attribute of SecondaryEffect
-                    System.out.println(pokemon2.getSpecies() + "'s " + ((SecondaryStatModifier) move.getSecondaryEffect()).getStat() + " was changed");
-                    //implement counter for sleep or toxic
-                    System.out.println(pokemon2.getSpecies() + "'s SPC: " + pokemon2.getCurrentSpc() + " / " + pokemon2.getSpc());
-                }
-            }
-            // OHKO section - self-destruct or OHKO moves
-            // implement support for the OHKO moves like Guillotine or Fissure
-            else if (move.getSecondaryEffect() instanceof SecondaryOHKO){
-                if (move.getSecondaryEffect().targetSelf() == true){
-                    pokemon1.damage(pokemon1.getCurrentHp());
-                    System.out.println(pokemon1.getSpecies() + " self-destructed!");
-                }
-            }
-            // Recovery section
-            else if (move.getSecondaryEffect() instanceof SecondaryRecovery){
-                if (pokemon1.getCurrentHp() * 2 >= pokemon1.getHp()){
-                    pokemon1.resetHp();
-                }
-                else {
-                    pokemon1.heal((int) pokemon1.getHp() / 2);
-                }
-                System.out.println(pokemon1.getSpecies() + " recovered HP!");
-            }
-        }
-
+        turn();
         display();
     }
 
@@ -122,7 +22,7 @@ public class Battle {
         if (calculateMiss(move.getAccuracy()) == false) {
             damage = DamageCalculator.calculate(attackingPokemon, move, defendingPokemon);
         }
-        TRAINER1.getActivePokemon().damage(damage);
+        defendingPokemon.damage(damage);
 
         return damage;
     }
@@ -145,6 +45,174 @@ public class Battle {
         System.out.println(TRAINER1.getActivePokemon().getStatus1() == null ? "" : TRAINER1.getActivePokemon().getStatus1().getAbbreviated());
         System.out.println(TRAINER2.getActivePokemon().getSpecies() + ": " + TRAINER2.getActivePokemon().getCurrentHp() + " / " + TRAINER2.getActivePokemon().getHp());
         System.out.println(TRAINER2.getActivePokemon().getStatus1() == null ? "" : TRAINER2.getActivePokemon().getStatus1().getAbbreviated());
+    }
+
+    public void handleTrainerAction(Trainer activeTrainer, Move move, Trainer opponentTrainer) {
+        Pokemon activePokemon = activeTrainer.getActivePokemon();
+        Pokemon opponentPokemon = opponentTrainer.getActivePokemon();
+
+        //extract below into some sort of messaging function?
+        System.out.println(activePokemon.getSpecies() + " used " + move.getName() + "!");
+
+        // need to include preliminary check for 0x effective to avoid secondary effect taking place
+        boolean miss = calculateMiss(move.getAccuracy());
+        if (miss == false) {
+            //check to see if move is of non-damaging category
+            if (move.getBasePower() > 0) {
+                int damage = attack(activePokemon, move, opponentPokemon);
+            }
+
+            //secondary effects
+            //split these up into steps!
+            //Status moves
+            if (move.getSecondaryEffect() instanceof SecondaryStatus) {
+                if (calculateMiss(move.getSecondaryEffect().getProbability()) == false) {
+                    //below line looks messy
+                    //REST status
+                    if (((SecondaryStatus) move.getSecondaryEffect()).getStatus() == Status.REST) {
+                        activePokemon.setStatus1(Status.REST);
+                        activePokemon.resetHp();
+                        System.out.println(activePokemon.getSpecies() + " went to sleep!");
+                    }
+                    // other STATUSes
+                    else {
+                        opponentPokemon.setStatus1((((SecondaryStatus) move.getSecondaryEffect()).getStatus()));
+                        System.out.println("The opponent has a nasty case of " + opponentPokemon.getStatus1());
+                        //implement counter for sleep or toxic
+                    }
+                }
+            }
+            //secondaryStatModifier section - check target of move!
+            else if (move.getSecondaryEffect() instanceof SecondaryStatModifier) {
+                if (calculateMiss(move.getSecondaryEffect().getProbability()) == false) {
+                    int change = ((SecondaryStatModifier) move.getSecondaryEffect()).getModifier();
+                    //below line looks messy
+                    switch (((SecondaryStatModifier) move.getSecondaryEffect()).getStat()) {
+                        case "ATK": {
+                            if (move.getSecondaryEffect().targetSelf() == true) {
+                                activePokemon.changeAtkStageMultiplierBy(change);
+                            } else {
+                                opponentPokemon.changeAtkStageMultiplierBy(change);
+                            }
+                            break;
+                        }
+                        case "DEF": {
+                            if (move.getSecondaryEffect().targetSelf() == true) {
+                                activePokemon.changeDefStageMultiplierBy(change);
+                            } else {
+                                opponentPokemon.changeDefStageMultiplierBy(change);
+                            }
+                            break;
+                        }
+                        case "SPC": {
+                            if (move.getSecondaryEffect().targetSelf() == true) {
+                                activePokemon.changeSpcStageMultiplierBy(change);
+                            } else {
+                                opponentPokemon.changeSpcStageMultiplierBy(change);
+                            }
+                            break;
+                        }
+                        case "SPD": {
+                            if (move.getSecondaryEffect().targetSelf() == true) {
+                                activePokemon.changeSpdStageMultiplierBy(change);
+                            } else {
+                                opponentPokemon.changeSpdStageMultiplierBy(change);
+                            }
+                            break;
+                        }
+                    }
+//                    // make messages an attribute of SecondaryEffect
+//                    System.out.println(opponentPokemon.getSpecies() + "'s " + ((SecondaryStatModifier) move.getSecondaryEffect()).getStat() + " was changed");
+//                    //implement counter for sleep or toxic
+//                    System.out.println(opponentPokemon.getSpecies() + "'s SPC: " + opponentPokemon.getCurrentSpc() + " / " + opponentPokemon.getSpc());
+                }
+            }
+            // OHKO section - self-destruct or OHKO moves
+            // implement support for the OHKO moves like Guillotine or Fissure
+            else if (move.getSecondaryEffect() instanceof SecondaryOHKO) {
+                if (move.getSecondaryEffect().targetSelf() == true) {
+                    activePokemon.damage(activePokemon.getCurrentHp());
+                    activePokemon.setStatus1(Status.FAINT);
+                    System.out.println(activePokemon.getSpecies() + " self-destructed!");
+                }
+            }
+            // Recovery section
+            else if (move.getSecondaryEffect() instanceof SecondaryRecovery) {
+                if (activePokemon.getCurrentHp() * 2 >= activePokemon.getHp()) {
+                    activePokemon.resetHp();
+                } else {
+                    activePokemon.heal((int) activePokemon.getHp() / 2);
+                }
+                System.out.println(activePokemon.getSpecies() + " recovered HP!");
+            }
+        }
+    }
+
+    public void turn(){
+        // split this off into individual method
+        System.out.println("What'll it be, trainer 1?");
+        System.out.println(TRAINER1.getActivePokemon().getMove1().getName() + " | " + TRAINER1.getActivePokemon().getMove2().getName() + " | " + TRAINER1.getActivePokemon().getMove3().getName() + " | " + TRAINER1.getActivePokemon().getMove4().getName());
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+
+        Move move1 = null;
+        for (Move m: TRAINER1.getActivePokemon().getMoves()){
+            if (m.getName().equals(input)){
+                move1 = m;
+            }
+        }
+
+        System.out.println("What'll it be, trainer 2?");
+        System.out.println(TRAINER2.getActivePokemon().getMove1().getName() + " | " + TRAINER2.getActivePokemon().getMove2().getName() + " | " + TRAINER2.getActivePokemon().getMove3().getName() + " | " + TRAINER2.getActivePokemon().getMove4().getName());
+        input = scanner.nextLine();
+
+        Move move2 = null;
+        for (Move m: TRAINER2.getActivePokemon().getMoves()){
+            if (m.getName().equals(input)){
+                move2 = m;
+            }
+        }
+
+        if (TRAINER1.getActivePokemon().getCurrentSpd() > TRAINER2.getActivePokemon().getCurrentSpd()){
+            handleTrainerAction(TRAINER1, move1, TRAINER2);
+            // handle fainted pokemon - split this into different method
+            if (TRAINER1.getActivePokemon().getStatus1() == Status.FAINT){
+                System.out.println(TRAINER1.getActivePokemon().getSpecies() + " fainted!");
+            }
+            else if (TRAINER2.getActivePokemon().getStatus1() == Status.FAINT){
+                System.out.println(TRAINER2.getActivePokemon().getSpecies() + " fainted!");
+            }
+            else {
+                handleTrainerAction(TRAINER2, move2, TRAINER1);
+                // again, split into different method
+                if (TRAINER1.getActivePokemon().getStatus1() == Status.FAINT){
+                    System.out.println(TRAINER1.getActivePokemon().getSpecies() + " fainted!");
+                }
+                else if (TRAINER2.getActivePokemon().getStatus1() == Status.FAINT){
+                    System.out.println(TRAINER2.getActivePokemon().getSpecies() + " fainted!");
+                }
+            }
+        }
+        else {
+            handleTrainerAction(TRAINER2, move2, TRAINER1);
+            // handle fainted pokemon - split this into different method
+            if (TRAINER1.getActivePokemon().getStatus1() == Status.FAINT){
+                System.out.println(TRAINER1.getActivePokemon().getSpecies() + " fainted!");
+            }
+            else if (TRAINER2.getActivePokemon().getStatus1() == Status.FAINT){
+                System.out.println(TRAINER2.getActivePokemon().getSpecies() + " fainted!");
+            }
+            else {
+                handleTrainerAction(TRAINER1, move1, TRAINER2);
+                // again, split into different method
+                if (TRAINER1.getActivePokemon().getStatus1() == Status.FAINT){
+                    System.out.println(TRAINER1.getActivePokemon().getSpecies() + " fainted!");
+                }
+                else if (TRAINER2.getActivePokemon().getStatus1() == Status.FAINT){
+                    System.out.println(TRAINER2.getActivePokemon().getSpecies() + " fainted!");
+                }
+            }
+        }
     }
 
     public void modifyStat(Pokemon pokemon, SecondaryStatModifier secondaryStatModifier){

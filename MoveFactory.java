@@ -135,6 +135,11 @@ public abstract class MoveFactory {
                 move = new Move(name, Type.ELECTRIC, 0, 100, 20, 0, secondaryEffect);
                 break;
             }
+            case "TOXIC": {
+                SecondaryEffect secondaryEffect = new SecondaryStatus(100, false, Status.BAD_POISON);
+                move = new Move(name, Type.POISON, 0, 85, 10, 0, secondaryEffect);
+                break;
+            }
             default: {
                 return null;
             }
