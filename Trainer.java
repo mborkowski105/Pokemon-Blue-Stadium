@@ -21,6 +21,8 @@ public class Trainer {
     public Pokemon getActivePokemon(){
         return activePokemon;
     }
-
-    // implement check within Trainer to see if all Pokemon are fainted
+    public List<Pokemon> getTeam() { return team; }
+    public void setActivePokemon(Pokemon p){
+        activePokemon = p;
+    }
 }

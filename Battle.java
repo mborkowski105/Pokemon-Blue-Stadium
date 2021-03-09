@@ -3,21 +3,30 @@ import java.util.Scanner;
 public class Battle {
     private final Trainer TRAINER1;
     private final Trainer TRAINER2;
+    private boolean trainer1Win;
+    private boolean trainer2Win;
     public Battle(Trainer trainer1, Trainer trainer2){
         TRAINER1 = trainer1;
         TRAINER2 = trainer2;
+        trainer1Win = false;
+        trainer2Win = false;
     }
 
-    // remember to implement "switch" functionality - this may throw off current implementation of taking turns
-    // switch parameters back to individual trainers, or split this method up into single turn method
     public void battle(){
-        display();
-        turn();
-        display();
+        while (checkForVictory() == false){
+            display();
+            turn();
+        }
+
+        if (trainer1Win){
+            System.out.println("\n Trainer 1 has won!");
+        }
+        else if (trainer2Win) {
+            System.out.println("\n Trainer 2 has won!");
+        }
     }
 
     public int attack(Pokemon attackingPokemon, Move move, Pokemon defendingPokemon) {
-        // below parameters for DamageCalculator seem a little unintuitive - reorder/ reconfigure?
         int damage = 0;
         if (calculateMiss(move.getAccuracy()) == false) {
             damage = DamageCalculator.calculate(attackingPokemon, move, defendingPokemon);
@@ -36,6 +45,54 @@ public class Battle {
             // move below message to somewhere else - "attack missed" will still display if secondary effect misses
             System.out.println("Attack missed!");
             return true;
+        }
+    }
+
+    public boolean checkForFaintedPokemon(){
+        if (TRAINER1.getActivePokemon().getStatus1() == Status.FAINT){
+            System.out.println(TRAINER1.getActivePokemon().getSpecies() + " fainted!");
+            if (checkForVictory() == false){
+                promptForPokemonSwitch(TRAINER1);
+            }
+            return true;
+        }
+        else if (TRAINER2.getActivePokemon().getStatus1() == Status.FAINT){
+            System.out.println(TRAINER2.getActivePokemon().getSpecies() + " fainted!");
+            if (checkForVictory() == false){
+                promptForPokemonSwitch(TRAINER2);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public boolean checkForVictory(){
+        trainer1Win = true;
+        trainer2Win = true;
+
+        for (Pokemon p : TRAINER1.getTeam()){
+            if (p != null) {
+                if (p.getStatus1() != Status.FAINT) {
+                    trainer2Win = false;
+                }
+            }
+        }
+        for (Pokemon p : TRAINER2.getTeam()){
+            if (p != null) {
+                if (p.getStatus1() != Status.FAINT) {
+                    trainer1Win = false;
+                }
+            }
+        }
+
+        if (trainer1Win){
+            return true;
+        }
+        else if (trainer2Win){
+            return true;
+        }
+        else {
+            return false;
         }
     }
 
@@ -148,6 +205,28 @@ public class Battle {
         }
     }
 
+    public void promptForPokemonSwitch(Trainer trainer){
+        Scanner scanner = new Scanner(System.in);
+        //prevent user from switching in fainted pokemon!
+        System.out.println("\n Switch in a new pokemon: \n");
+        for (Pokemon p : trainer.getTeam()){
+            if (p != null) {
+                System.out.print(p.getSpecies() + " | ");
+            }
+        }
+        System.out.println("\n");
+        String input = scanner.nextLine();
+
+        for (Pokemon p : trainer.getTeam()){
+            if (p != null) {
+                if (p.getSpecies().equals(input)) {
+                    trainer.setActivePokemon(p);
+                    System.out.println("Go! " + p.getSpecies() + "\n");
+                }
+            }
+        }
+    }
+
     public void turn(){
         // split this off into individual method
         System.out.println("What'll it be, trainer 1?");
@@ -175,42 +254,17 @@ public class Battle {
 
         if (TRAINER1.getActivePokemon().getCurrentSpd() > TRAINER2.getActivePokemon().getCurrentSpd()){
             handleTrainerAction(TRAINER1, move1, TRAINER2);
-            // handle fainted pokemon - split this into different method
-            if (TRAINER1.getActivePokemon().getStatus1() == Status.FAINT){
-                System.out.println(TRAINER1.getActivePokemon().getSpecies() + " fainted!");
-            }
-            else if (TRAINER2.getActivePokemon().getStatus1() == Status.FAINT){
-                System.out.println(TRAINER2.getActivePokemon().getSpecies() + " fainted!");
-            }
-            else {
+            if (checkForFaintedPokemon() == false){
                 handleTrainerAction(TRAINER2, move2, TRAINER1);
-                // again, split into different method
-                if (TRAINER1.getActivePokemon().getStatus1() == Status.FAINT){
-                    System.out.println(TRAINER1.getActivePokemon().getSpecies() + " fainted!");
-                }
-                else if (TRAINER2.getActivePokemon().getStatus1() == Status.FAINT){
-                    System.out.println(TRAINER2.getActivePokemon().getSpecies() + " fainted!");
-                }
+                checkForFaintedPokemon();
             }
         }
         else {
             handleTrainerAction(TRAINER2, move2, TRAINER1);
             // handle fainted pokemon - split this into different method
-            if (TRAINER1.getActivePokemon().getStatus1() == Status.FAINT){
-                System.out.println(TRAINER1.getActivePokemon().getSpecies() + " fainted!");
-            }
-            else if (TRAINER2.getActivePokemon().getStatus1() == Status.FAINT){
-                System.out.println(TRAINER2.getActivePokemon().getSpecies() + " fainted!");
-            }
-            else {
+            if (checkForFaintedPokemon() == false){
                 handleTrainerAction(TRAINER1, move1, TRAINER2);
-                // again, split into different method
-                if (TRAINER1.getActivePokemon().getStatus1() == Status.FAINT){
-                    System.out.println(TRAINER1.getActivePokemon().getSpecies() + " fainted!");
-                }
-                else if (TRAINER2.getActivePokemon().getStatus1() == Status.FAINT){
-                    System.out.println(TRAINER2.getActivePokemon().getSpecies() + " fainted!");
-                }
+                checkForFaintedPokemon();
             }
         }
     }

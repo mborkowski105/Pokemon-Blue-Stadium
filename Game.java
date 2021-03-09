@@ -23,8 +23,8 @@ public class Game
 //        System.out.println(gengar.getStatus1() + ", " + gengar.getStatus1Counter() + " turn");
 //        System.out.println(gengar.getCurrentSpc() + " / " + gengar.getSpc());
 
-        Trainer trainer1 = new Trainer(requestNewRentalPokemon("GOLEM"), null, null, null, null, null);
-        Trainer trainer2 = new Trainer(requestNewRentalPokemon("VENUSAUR"), null, null, null, null, null);
+        Trainer trainer1 = new Trainer(requestNewRentalPokemon("STARMIE"), requestNewRentalPokemon("VAPOREON"), null, null, null, null);
+        Trainer trainer2 = new Trainer(requestNewRentalPokemon("GOLEM"), requestNewRentalPokemon("NIDOKING"), null, null, null, null);
 
         Battle battle = new Battle(trainer1, trainer2);
         battle.battle();
