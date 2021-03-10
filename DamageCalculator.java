@@ -1,6 +1,7 @@
 // TODO turn abstract DamageCalculator class into interface (can be versioned by Gen 1-8 formulas)
 
 public abstract class DamageCalculator {
+    //change name of defendingPokemon parameter to opponentPokemon to be more consistent across models
     public static int calculate(Pokemon attackingPokemon, Move move, Pokemon defendingPokemon){
 
         // damage by level: for Seismic Toss and Night Shade, just do 100 damage, ignore type chart
@@ -44,7 +45,7 @@ public abstract class DamageCalculator {
             System.out.println("It's super effective! x" + typeModifier);
         }
         else if (typeModifier == 0) {
-            System.out.println("It doesn't effect");
+            System.out.println("It doesn't effect " + defendingPokemon);
         }
         else if (typeModifier < 1.0) {
             System.out.println("It's not very effective... x" + typeModifier);

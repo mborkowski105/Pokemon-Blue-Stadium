@@ -1,6 +1,7 @@
 // consider making this class into an interface
 
 public enum Status {
+    HEALTHY (""),
     POISON ("PSN"),
     BAD_POISON ("PSN"),
     PARALYSIS ("PAR"),

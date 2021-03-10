@@ -63,6 +63,9 @@ public class Pokemon {
         moves.add(move2);
         moves.add(move3);
         moves.add(move4);
+
+        this.status1 = Status.HEALTHY;
+        this.status1Counter = 0;
     }
 
     public String getSpecies() {
@@ -110,31 +113,47 @@ public class Pokemon {
     protected int getAtkStageMultiplier() {
         return atkStageMultiplier;
     }
-    protected void changeAtkStageMultiplierBy(int num) {
+    protected boolean changeAtkStageMultiplierBy(int num) {
+        if (atkStageMultiplier + num > 6 || atkStageMultiplier + num < -6){
+            return false;
+        }
         atkStageMultiplier += num;
         currentAtk = getStatAlteration(ATK, atkStageMultiplier);
+        return true;
     }
 
     protected int getDefStageMultiplier() {
         return defStageMultiplier;
     }
-    protected void changeDefStageMultiplierBy(int num) {
+    protected boolean changeDefStageMultiplierBy(int num) {
+        if (defStageMultiplier + num > 6 || defStageMultiplier + num < -6){
+            return false;
+        }
         defStageMultiplier += num;
         currentDef = getStatAlteration(DEF, defStageMultiplier);
+        return true;
     }
     protected int getSpcStageMultiplier() {
         return spcStageMultiplier;
     }
-    protected void changeSpcStageMultiplierBy(int num) {
+    protected boolean changeSpcStageMultiplierBy(int num) {
+        if (spcStageMultiplier + num > 6 || spcStageMultiplier + num < -6){
+            return false;
+        }
         spcStageMultiplier += num;
         currentSpc = getStatAlteration(SPC, spcStageMultiplier);
+        return true;
     }
     protected int getSpdStageMultiplier() {
         return spdStageMultiplier;
     }
-    protected void changeSpdStageMultiplierBy(int num) {
+    protected boolean changeSpdStageMultiplierBy(int num) {
+        if (spdStageMultiplier + num > 6 || spdStageMultiplier + num < -6){
+            return false;
+        }
         spdStageMultiplier += num;
         currentSpd = getStatAlteration(SPD, spdStageMultiplier);
+        return true;
     }
     private int getStatAlteration(int maxStat, int stageMultiplier) {
         if (stageMultiplier == -6) {
@@ -186,7 +205,7 @@ public class Pokemon {
         return currentHp;
     }
     protected int damage(int value) {
-        if (currentHp - value < 0) {
+        if (currentHp - value <= 0) {
             currentHp = 0;
             setStatus1(Status.FAINT);
         }
