@@ -106,6 +106,11 @@ public abstract class MoveFactory {
                 move = new Move(name, Type.GRASS, 0, 75, 15, 0, secondaryEffect);
                 break;
             }
+            case "SLUDGE": {
+                SecondaryEffect secondaryEffect = new SecondaryStatus(40, false, Status.POISON);
+                move = new Move(name, Type.POISON, 65, 100, 20, 0, secondaryEffect);
+                break;
+            }
             case "SOFT-BOILED": {
                 SecondaryEffect secondaryEffect = new SecondaryRecovery(100, true);
                 move = new Move(name, Type.NORMAL, 0, 100, 10, 0, secondaryEffect);

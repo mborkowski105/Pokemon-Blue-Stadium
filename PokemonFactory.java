@@ -45,12 +45,32 @@ public abstract class PokemonFactory {
                 pokemon = new Pokemon(species, Type.ROCK, Type.GROUND, 363, 318, 358, 208, 188, 45, move1, move2, move3, move4);
                 break;
             }
+            case "DODRIO": {
+                pokemon = new Pokemon(species, Type.NORMAL, Type.FLYING, 323, 318, 238, 218, 298, 100, move1, move2, move3, move4);
+                break;
+            }
             case "GENGAR": {
                 pokemon = new Pokemon(species, Type.GHOST, Type.POISON, 323, 228, 218, 358, 318, 130, move1, move2, move3, move4);
                 break;
             }
+            case "HYPNO": {
+                pokemon = new Pokemon(species, Type.PSYCHIC, null, 373, 244, 238, 328, 232, 67, move1, move2, move3, move4);
+                break;
+            }
+            case "WEEZING": {
+                pokemon = new Pokemon(species, Type.POISON, null, 333, 278, 338, 268, 218, 60, move1, move2, move3, move4);
+                break;
+            }
             case "CHANSEY": {
                 pokemon = new Pokemon(species, Type.NORMAL, null, 703, 108, 108, 308, 198, 50, move1, move2, move3, move4);
+                break;
+            }
+            case "ELECTABUZZ": {
+                pokemon = new Pokemon(species, Type.ELECTRIC, null, 333, 264, 212, 268, 308, 105, move1, move2, move3, move4);
+                break;
+            }
+            case "MAGMAR": {
+                pokemon = new Pokemon(species, Type.FIRE, null, 333, 288, 212, 268, 284, 93, move1, move2, move3, move4);
                 break;
             }
             case "STARMIE": {
@@ -71,6 +91,10 @@ public abstract class PokemonFactory {
             }
             case "FLAREON": {
                 pokemon = new Pokemon(species, Type.FIRE, null, 333, 358, 218, 318, 228, 65, move1, move2, move3, move4);
+                break;
+            }
+            case "KABUTOPS": {
+                pokemon = new Pokemon(species, Type.WATER, Type.ROCK, 323, 328, 308, 238, 258, 80, move1, move2, move3, move4);
                 break;
             }
             case "SNORLAX": {

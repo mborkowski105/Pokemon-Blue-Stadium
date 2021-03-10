@@ -212,7 +212,7 @@ public class Pokemon {
         else {
             currentHp = currentHp - value;
         }
-        return currentHp;
+        return value;
     }
     protected int resetHp() {
         currentHp = HP;

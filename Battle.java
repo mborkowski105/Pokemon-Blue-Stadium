@@ -124,6 +124,7 @@ public class Battle {
             }
             // for other STATUSes, calculate probability
             // actually, should probably do this at the top of method
+            // add in "But it failed!"
             else if (opponentPokemon.getStatus1() == Status.HEALTHY && Math.random() * 100.0 <= move.getSecondaryEffect().getProbability()) {
                 opponentPokemon.setStatus1(status);
                 if (status == Status.SLEEP){
@@ -283,7 +284,17 @@ public class Battle {
 
     public void runPostAttackTasks(Pokemon activePokemon, Move move, Pokemon opponentPokemon){
 
-
+        if (activePokemon.getStatus1() == Status.POISON){
+            System.out.println(activePokemon.getSpecies() + "'s hurt by POISON!");
+            activePokemon.damage(activePokemon.getHp() / 16);
+        }
+        if (activePokemon.getStatus1() == Status.BAD_POISON){
+            System.out.println(activePokemon.getSpecies() + "'s hurt by POISON!");
+            int damage = activePokemon.damage((activePokemon.getHp() / 16) * (1 + activePokemon.getStatus1Counter()));
+            if (damage < ((int) 15.0 * Math.floor(activePokemon.getHp() / 16))){
+                activePokemon.incrementStatus1Counter();
+            }
+        }
     }
 
     // returns true if a player as won
@@ -327,7 +338,7 @@ public class Battle {
                         handleSecondaryEffects(TRAINER1.getActivePokemon(), move1, TRAINER2.getActivePokemon());
                     }
                 }
-                //runPostAttackTasks
+                runPostAttackTasks(TRAINER1.getActivePokemon(), move1, TRAINER2.getActivePokemon());
             }
 
             if (checkForPokemonFaint(TRAINER1) == false && checkForPokemonFaint(TRAINER2) == false){
@@ -341,7 +352,7 @@ public class Battle {
                             handleSecondaryEffects(TRAINER2.getActivePokemon(), move2, TRAINER1.getActivePokemon());
                         }
                     }
-                    //runPostMoveTasks
+                    runPostAttackTasks(TRAINER2.getActivePokemon(), move2, TRAINER1.getActivePokemon());
                     if (checkForPokemonFaint(TRAINER1) == true){
                         System.out.println(TRAINER1.getActivePokemon().getSpecies() + " fainted!");
                         if (checkForTeamLoss(TRAINER1) == false) {
@@ -398,7 +409,7 @@ public class Battle {
                         handleSecondaryEffects(TRAINER2.getActivePokemon(), move2, TRAINER1.getActivePokemon());
                     }
                 }
-                //runPostAttackTasks
+                runPostAttackTasks(TRAINER2.getActivePokemon(), move2, TRAINER1.getActivePokemon());
             }
 
             if (checkForPokemonFaint(TRAINER1) == false && checkForPokemonFaint(TRAINER2) == false){
@@ -412,7 +423,7 @@ public class Battle {
                             handleSecondaryEffects(TRAINER1.getActivePokemon(), move1, TRAINER2.getActivePokemon());
                         }
                     }
-                    //runPostMoveTasks
+                    runPostAttackTasks(TRAINER1.getActivePokemon(), move1, TRAINER2.getActivePokemon());
                     if (checkForPokemonFaint(TRAINER1) == true){
                         System.out.println(TRAINER1.getActivePokemon().getSpecies() + " fainted!");
                         if (checkForTeamLoss(TRAINER1) == false) {
