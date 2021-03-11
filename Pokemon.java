@@ -29,6 +29,8 @@ public class Pokemon {
 
     private Status status1;
     private int status1Counter;
+    private Status status2;
+    private int status2Counter;
 
     private List<Move> moves;
 
@@ -66,6 +68,8 @@ public class Pokemon {
 
         this.status1 = Status.HEALTHY;
         this.status1Counter = 0;
+        this.status2 = Status.HEALTHY;
+        this.status2Counter = 0;
     }
 
     public String getSpecies() {
@@ -239,6 +243,21 @@ public class Pokemon {
     }
     protected void resetStatus1Counter() {
         status1Counter = 0;
+    }
+    public Status getStatus2() {
+        return status2;
+    }
+    protected void setStatus2(Status status) {
+        status2 = status;
+    }
+    protected int getStatus2Counter() {
+        return status2Counter;
+    }
+    protected void incrementStatus2Counter() {
+        status2Counter ++;
+    }
+    protected void resetStatus2Counter() {
+        status2Counter = 0;
     }
 
     protected Move getMove1() {

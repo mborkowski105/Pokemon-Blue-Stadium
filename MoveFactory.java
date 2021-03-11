@@ -29,6 +29,11 @@ public abstract class MoveFactory {
                 move = new Move(name, Type.NORMAL, 85, 100, 15, 0, secondaryEffect);
                 break;
             }
+            case "CONFUSE RAY": {
+                SecondaryEffect secondaryEffect = new SecondaryStatus(100, false, Status.CONFUSED);
+                move = new Move(name, Type.GHOST, 0, 100, 10, 0, secondaryEffect);
+                break;
+            }
             case "DRILL PECK": {
                 move = new Move(name, Type.FLYING, 80, 100, 20, 0, null);
                 break;

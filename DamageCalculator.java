@@ -66,4 +66,18 @@ public abstract class DamageCalculator {
 
         return (int)((Math.min((int)((int)(((2.0 + (int)(0.4 * level)) * attackingStat * basePower) / defendingStat) / 50.0) , 997.0) + 2.0) * multiplier);
     }
+
+    public static int calculateConfusionDamage(Pokemon attackingPokemon){
+
+        double basePower = 40.0;
+        double attackingStat;
+        double defendingStat;
+        double level = 100.0;
+        double randomNumber = (217.0 + (Math.random() * 38.0)) / 255.0;
+
+        attackingStat = attackingPokemon.getCurrentAtk();
+        defendingStat = attackingPokemon.getCurrentDef();
+
+        return (int)((Math.min((int)((int)(((2.0 + (int)(0.4 * level)) * attackingStat * basePower) / defendingStat) / 50.0) , 997.0) + 2.0) * randomNumber);
+    }
 }

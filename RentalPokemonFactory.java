@@ -37,7 +37,7 @@ public abstract class RentalPokemonFactory {
                 break;
             }
             case "GENGAR": {
-                pokemon = PokemonFactory.createPokemon("GENGAR", "THUNDERBOLT", "HYPNOSIS", "EXPLOSION", "NIGHT SHADE");
+                pokemon = PokemonFactory.createPokemon("GENGAR", "THUNDERBOLT", "CONFUSE RAY", "EXPLOSION", "NIGHT SHADE");
                 break;
             }
             case "HYPNO": {

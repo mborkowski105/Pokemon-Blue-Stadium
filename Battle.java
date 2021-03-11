@@ -65,23 +65,57 @@ public class Battle {
         System.out.println(TRAINER2.getActivePokemon().getStatus1().getAbbreviated());
     }
 
-    public void handlePokemonMove(Trainer activeTrainer, Move move, Trainer opponentTrainer) {
+    // returns false if the Pokemon is unencumbered by confusion, true if it hits itself and cannot attack
+    public boolean handlePokemonConfusion(Pokemon pokemon){
+        if (pokemon.getStatus2() == Status.CONFUSED) {
+            //random chance to snap out of confusion within 2-5 turns
+            if (pokemon.getStatus2Counter() > 4 || (pokemon.getStatus2Counter() > 0 && Math.random() * 100.0 < 25.0)) {
+                pokemon.setStatus2(Status.HEALTHY);
+                pokemon.resetStatus2Counter();
+                System.out.println(pokemon.getSpecies() + "'s CONFUSED no more!");
+                return false;
+            }
+            else {
+                System.out.println(pokemon.getSpecies() + " is CONFUSED!");
+                if (Math.random() * 100.0 < 50.0) {
+                    System.out.println("It hurt itself in CONFUSION!");
+                    pokemon.damage(DamageCalculator.calculateConfusionDamage(pokemon));
+                    pokemon.incrementStatus2Counter();
+                    return true;
+                }
+                else {
+                    pokemon.incrementStatus2Counter();
+                    return false;
+                }
+            }
+        }
+        else {
+            return false;
+        }
+    }
+
+    // returns true if the Pokemon is able to attack
+    public boolean handlePokemonMove(Trainer activeTrainer, Move move, Trainer opponentTrainer) {
         Pokemon activePokemon = activeTrainer.getActivePokemon();
         Pokemon opponentPokemon = opponentTrainer.getActivePokemon();
 
-        //extract below into some sort of messaging function?
-        System.out.println(activePokemon.getSpecies() + " used " + move.getName() + "!");
+        if (handlePokemonConfusion(activePokemon) == false) {
+            //extract below into some sort of messaging function?
+            System.out.println(activePokemon.getSpecies() + " used " + move.getName() + "!");
 
-        // need to include preliminary check for 0x effective to avoid secondary effect taking place
-        boolean miss = calculateMiss(move.getAccuracy());
-        if (miss == false) {
-            //check to see if move is of non-damaging category
-            if (move.getBasePower() > 0) {
-                attack(activePokemon, move, opponentPokemon);
+            // need to include preliminary check for 0x effective to avoid secondary effect taking place
+            boolean miss = calculateMiss(move.getAccuracy());
+            if (miss == false) {
+                //check to see if move is of non-damaging category
+                if (move.getBasePower() > 0) {
+                    attack(activePokemon, move, opponentPokemon);
+                }
             }
+            move.decrementCurrentPp();
+            return true;
         }
 
-        move.decrementCurrentPp();
+        return false;
     }
 
     // prevent switching in a fainted Pokemon
@@ -120,6 +154,13 @@ public class Battle {
                     activePokemon.setStatus1(Status.REST);
                     activePokemon.resetHp();
                     System.out.println(activePokemon.getSpecies() + " went to SLEEP!");
+                }
+            }
+            //CONFUSION
+            else if (status == Status.CONFUSED){
+                if (opponentPokemon.getStatus2() == Status.HEALTHY && Math.random() * 100.0 <= move.getSecondaryEffect().getProbability()){
+                    System.out.println(opponentPokemon.getSpecies() + " was CONFUSED! It may not be able to attack!");
+                    opponentPokemon.setStatus2(Status.CONFUSED);
                 }
             }
             // for other STATUSes, calculate probability
@@ -329,13 +370,13 @@ public class Battle {
         // make active Pokemon into variables?
         if (TRAINER1.getActivePokemon().getCurrentSpd() > TRAINER2.getActivePokemon().getCurrentSpd()){
             if (runPreAttackTasks(TRAINER1.getActivePokemon()) == true) {
-                handlePokemonMove(TRAINER1, move1, TRAINER2);
-                if (move1.getSecondaryEffect() != null){
-                    if (move1.getSecondaryEffect().targetSelf() == true && checkForPokemonFaint(TRAINER1) == false){
-                        handleSecondaryEffects(TRAINER1.getActivePokemon(), move1, TRAINER2.getActivePokemon());
-                    }
-                    else if (move1.getSecondaryEffect().targetSelf() == false && checkForPokemonFaint(TRAINER2) == false){
-                        handleSecondaryEffects(TRAINER1.getActivePokemon(), move1, TRAINER2.getActivePokemon());
+                if (handlePokemonMove(TRAINER1, move1, TRAINER2) == true) {
+                    if (move1.getSecondaryEffect() != null) {
+                        if (move1.getSecondaryEffect().targetSelf() == true && checkForPokemonFaint(TRAINER1) == false) {
+                            handleSecondaryEffects(TRAINER1.getActivePokemon(), move1, TRAINER2.getActivePokemon());
+                        } else if (move1.getSecondaryEffect().targetSelf() == false && checkForPokemonFaint(TRAINER2) == false) {
+                            handleSecondaryEffects(TRAINER1.getActivePokemon(), move1, TRAINER2.getActivePokemon());
+                        }
                     }
                 }
                 runPostAttackTasks(TRAINER1.getActivePokemon(), move1, TRAINER2.getActivePokemon());
@@ -343,13 +384,13 @@ public class Battle {
 
             if (checkForPokemonFaint(TRAINER1) == false && checkForPokemonFaint(TRAINER2) == false){
                 if (runPreAttackTasks(TRAINER2.getActivePokemon()) == true) {
-                    handlePokemonMove(TRAINER2, move2, TRAINER1);
-                    if (move2.getSecondaryEffect() != null){
-                        if (move2.getSecondaryEffect().targetSelf() == true && checkForPokemonFaint(TRAINER1) == false){
-                            handleSecondaryEffects(TRAINER2.getActivePokemon(), move2, TRAINER1.getActivePokemon());
-                        }
-                        else if (move2.getSecondaryEffect().targetSelf() == false && checkForPokemonFaint(TRAINER2) == false){
-                            handleSecondaryEffects(TRAINER2.getActivePokemon(), move2, TRAINER1.getActivePokemon());
+                    if (handlePokemonMove(TRAINER2, move2, TRAINER1) == true) {
+                        if (move2.getSecondaryEffect() != null) {
+                            if (move2.getSecondaryEffect().targetSelf() == true && checkForPokemonFaint(TRAINER1) == false) {
+                                handleSecondaryEffects(TRAINER2.getActivePokemon(), move2, TRAINER1.getActivePokemon());
+                            } else if (move2.getSecondaryEffect().targetSelf() == false && checkForPokemonFaint(TRAINER2) == false) {
+                                handleSecondaryEffects(TRAINER2.getActivePokemon(), move2, TRAINER1.getActivePokemon());
+                            }
                         }
                     }
                     runPostAttackTasks(TRAINER2.getActivePokemon(), move2, TRAINER1.getActivePokemon());
@@ -400,13 +441,13 @@ public class Battle {
         else {
             // maybe make arguments more consistent - can be confusing when to pass in Trainer or Pokemon
             if (runPreAttackTasks(TRAINER2.getActivePokemon()) == true) {
-                handlePokemonMove(TRAINER2, move2, TRAINER1);
-                if (move2.getSecondaryEffect() != null){
-                    if (move2.getSecondaryEffect().targetSelf() == true && checkForPokemonFaint(TRAINER1) == false){
-                        handleSecondaryEffects(TRAINER2.getActivePokemon(), move2, TRAINER1.getActivePokemon());
-                    }
-                    else if (move2.getSecondaryEffect().targetSelf() == false && checkForPokemonFaint(TRAINER2) == false){
-                        handleSecondaryEffects(TRAINER2.getActivePokemon(), move2, TRAINER1.getActivePokemon());
+                if (handlePokemonMove(TRAINER2, move2, TRAINER1) == true) {
+                    if (move2.getSecondaryEffect() != null) {
+                        if (move2.getSecondaryEffect().targetSelf() == true && checkForPokemonFaint(TRAINER1) == false) {
+                            handleSecondaryEffects(TRAINER2.getActivePokemon(), move2, TRAINER1.getActivePokemon());
+                        } else if (move2.getSecondaryEffect().targetSelf() == false && checkForPokemonFaint(TRAINER2) == false) {
+                            handleSecondaryEffects(TRAINER2.getActivePokemon(), move2, TRAINER1.getActivePokemon());
+                        }
                     }
                 }
                 runPostAttackTasks(TRAINER2.getActivePokemon(), move2, TRAINER1.getActivePokemon());
@@ -414,13 +455,13 @@ public class Battle {
 
             if (checkForPokemonFaint(TRAINER1) == false && checkForPokemonFaint(TRAINER2) == false){
                 if (runPreAttackTasks(TRAINER1.getActivePokemon()) == true) {
-                    handlePokemonMove(TRAINER1, move1, TRAINER2);
-                    if (move1.getSecondaryEffect() != null){
-                        if (move1.getSecondaryEffect().targetSelf() == true && checkForPokemonFaint(TRAINER1) == false){
-                            handleSecondaryEffects(TRAINER1.getActivePokemon(), move1, TRAINER2.getActivePokemon());
-                        }
-                        else if (move1.getSecondaryEffect().targetSelf() == false && checkForPokemonFaint(TRAINER2) == false){
-                            handleSecondaryEffects(TRAINER1.getActivePokemon(), move1, TRAINER2.getActivePokemon());
+                    if (handlePokemonMove(TRAINER1, move1, TRAINER2) == true) {
+                        if (move1.getSecondaryEffect() != null) {
+                            if (move1.getSecondaryEffect().targetSelf() == true && checkForPokemonFaint(TRAINER1) == false) {
+                                handleSecondaryEffects(TRAINER1.getActivePokemon(), move1, TRAINER2.getActivePokemon());
+                            } else if (move1.getSecondaryEffect().targetSelf() == false && checkForPokemonFaint(TRAINER2) == false) {
+                                handleSecondaryEffects(TRAINER1.getActivePokemon(), move1, TRAINER2.getActivePokemon());
+                            }
                         }
                     }
                     runPostAttackTasks(TRAINER1.getActivePokemon(), move1, TRAINER2.getActivePokemon());

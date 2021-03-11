@@ -9,7 +9,8 @@ public enum Status {
     FREEZE ("FRZ"),
     SLEEP ("SLP"),
     REST ("SLP"),
-    FAINT ("FNT");
+    FAINT ("FNT"),
+    CONFUSED ("");
 
     private final String ABBREVIATED;
 
