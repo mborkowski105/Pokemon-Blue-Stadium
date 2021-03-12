@@ -20,12 +20,20 @@ public abstract class RentalPokemonFactory {
                 pokemon = PokemonFactory.createPokemon("RAICHU", "THUNDERBOLT", "SURF", "THUNDER WAVE", "AGILITY");
                 break;
             }
+            case "SANDSLASH": {
+                pokemon = PokemonFactory.createPokemon("SANDSLASH", "EARTHQUAKE", "SWORDS DANCE", "SLASH", "ROCK SLIDE");
+                break;
+            }
             case "NIDOKING": {
                 pokemon = PokemonFactory.createPokemon("NIDOKING", "EARTHQUAKE", "BLIZZARD", "THUNDER", "BODY SLAM");
                 break;
             }
             case "DUGTRIO": {
                 pokemon = PokemonFactory.createPokemon("DUGTRIO", "EARTHQUAKE", "ROCK SLIDE", "BODY SLAM", "TOXIC");
+                break;
+            }
+            case "POLIWRATH": {
+                pokemon = PokemonFactory.createPokemon("POLIWRATH", "SURF", "HYPNOSIS", "AMNESIA", "SUBMISSION");
                 break;
             }
             case "ALAKAZAM": {
@@ -44,6 +52,10 @@ public abstract class RentalPokemonFactory {
                 pokemon = PokemonFactory.createPokemon("HYPNO", "PSYCHIC", "HYPNOSIS", "SEISMIC TOSS", "REST");
                 break;
             }
+            case "ELECTRODE": {
+                pokemon = PokemonFactory.createPokemon("ELECTRODE", "THUNDER", "THUNDER WAVE", "SCREECH", "EXPLOSION");
+                break;
+            }
             case "WEEZING": {
                 pokemon = PokemonFactory.createPokemon("WEEZING", "TOXIC", "FIRE BLAST", "THUNDER", "EXPLOSION");
                 break;
@@ -56,11 +68,14 @@ public abstract class RentalPokemonFactory {
                 pokemon = PokemonFactory.createPokemon("STARMIE", "SURF", "THUNDERBOLT", "RECOVER", "THUNDER WAVE");
                 break;
             }
+            case "JYNX": {
+                pokemon = PokemonFactory.createPokemon("JYNX", "BLIZZARD", "PSYCHIC", "LOVELY KISS", "SEISMIC TOSS");
+                break;
+            }
             case "ELECTABUZZ": {
                 pokemon = PokemonFactory.createPokemon("ELECTABUZZ", "THUNDERBOLT", "THUNDER WAVE", "PSYCHIC", "SEISMIC TOSS");
                 break;
             }
-            
             case "VAPOREON": {
                 pokemon = PokemonFactory.createPokemon("VAPOREON", "SURF", "BLIZZARD", "ACID ARMOR", "REST");
                 break;

@@ -108,7 +108,12 @@ public class Battle {
             if (miss == false) {
                 //check to see if move is of non-damaging category
                 if (move.getBasePower() > 0) {
-                    attack(activePokemon, move, opponentPokemon);
+                    int damage = attack(activePokemon, move, opponentPokemon);
+                    // Recoil section
+                    if (move.getSecondaryEffect() instanceof SecondaryRecoil) {
+                        System.out.println(activePokemon.getSpecies() + "'s hit with RECOIL!");
+                        activePokemon.damage((int) damage / 4);
+                    }
                 }
             }
             move.decrementCurrentPp();
@@ -263,7 +268,6 @@ public class Battle {
                 System.out.println(activePokemon.getSpecies() + " is already at full health!");
             }
         }
-
     }
 
     // returns false if the Pokemon passed in is determined unable to attack

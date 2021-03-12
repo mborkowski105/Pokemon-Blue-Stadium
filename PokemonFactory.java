@@ -25,6 +25,10 @@ public abstract class PokemonFactory {
                 pokemon = new Pokemon(species, Type.ELECTRIC, null, 323, 278,208,278,298, 100, move1, move2, move3, move4);
                 break;
             }
+            case "SANDSLASH": {
+                pokemon = new Pokemon(species, Type.GROUND, null, 353, 298, 318, 208,	228, 65, move1, move2, move3, move4);
+                break;
+            }
             case "NIDOQUEEN": {
                 pokemon = new Pokemon(species, Type.GROUND, Type.POISON, 383, 262, 272, 248, 250, 76, move1, move2, move3, move4);
                 break;
@@ -35,6 +39,10 @@ public abstract class PokemonFactory {
             }
             case "DUGTRIO": {
                 pokemon = new Pokemon(species, Type.GROUND, null, 273,258, 198, 238, 338, 120, move1, move2, move3, move4);
+                break;
+            }
+            case "POLIWRATH": {
+                pokemon = new Pokemon(species, Type.WATER, Type.FIGHTING, 383, 268, 288, 238, 238, 70, move1, move2, move3, move4);
                 break;
             }
             case "ALAKAZAM": {
@@ -57,12 +65,20 @@ public abstract class PokemonFactory {
                 pokemon = new Pokemon(species, Type.PSYCHIC, null, 373, 244, 238, 328, 232, 67, move1, move2, move3, move4);
                 break;
             }
+            case "ELECTRODE": {
+                pokemon = new Pokemon(species, Type.ELECTRIC, null, 323, 198, 238, 258, 378, 140, move1, move2, move3, move4);
+                break;
+            }
             case "WEEZING": {
                 pokemon = new Pokemon(species, Type.POISON, null, 333, 278, 338, 268, 218, 60, move1, move2, move3, move4);
                 break;
             }
             case "CHANSEY": {
                 pokemon = new Pokemon(species, Type.NORMAL, null, 703, 108, 108, 308, 198, 50, move1, move2, move3, move4);
+                break;
+            }
+            case "JYNX": {
+                pokemon = new Pokemon(species, Type.ICE, Type.PSYCHIC, 333, 198, 168, 288, 288, 95, move1, move2, move3, move4);
                 break;
             }
             case "ELECTABUZZ": {
@@ -103,6 +119,7 @@ public abstract class PokemonFactory {
             }
             case "ZAPDOS": {
                 pokemon = new Pokemon(species, Type.ELECTRIC, Type.FLYING,383, 278, 268, 348, 298, 100, move1, move2, move3, move4);
+                break;
             }
             case "DRAGONITE": {
                 pokemon = new Pokemon(species, Type.DRAGON, Type.FLYING, 385, 366, 288, 298, 258, 80, move1, move2, move3, move4);

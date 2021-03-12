@@ -47,6 +47,11 @@ public abstract class MoveFactory {
                 move = new Move(name, Type.NORMAL, 170, 100, 5, 0, secondaryEffect);
                 break;
             }
+            case "FIRE BLAST": {
+                SecondaryEffect secondaryEffect = new SecondaryStatus(10, false, Status.BURN);
+                move = new Move(name, Type.FIRE, 120, 85, 5, 0, secondaryEffect);
+                break;
+            }
             case "HYDRO PUMP": {
                 move = new Move(name, Type.WATER, 120, 80, 5, 0, null);
                 break;
@@ -61,9 +66,9 @@ public abstract class MoveFactory {
                 move = new Move(name, Type.ICE, 95, 90, 10, 0, secondaryEffect);
                 break;
             }
-            case "FIRE BLAST": {
-                SecondaryEffect secondaryEffect = new SecondaryStatus(10, false, Status.BURN);
-                move = new Move(name, Type.FIRE, 120, 85, 5, 0, secondaryEffect);
+            case "LOVELY KISS": {
+                SecondaryEffect secondaryEffect = new SecondaryStatus(100, false, Status.SLEEP);
+                move = new Move(name, Type.NORMAL, 0, 75, 10, 0, secondaryEffect);
                 break;
             }
             case "NIGHT SHADE": {
@@ -96,6 +101,11 @@ public abstract class MoveFactory {
                 move = new Move(name, Type.ROCK, 75, 90, 10, 0, null);
                 break;
             }
+            case "SCREECH": {
+                SecondaryEffect secondaryEffect = new SecondaryStatModifier(100, false, "DEF", -2);
+                move = new Move(name, Type.NORMAL, 0, 85, 40, 0, secondaryEffect);
+                break;
+            }
             case "SEISMIC TOSS": {
                 SecondaryEffect secondaryEffect = new SecondaryDamageByLevel(100, false);
                 move = new Move(name, Type.NORMAL, 1, 100, 20, 0, secondaryEffect);
@@ -119,6 +129,11 @@ public abstract class MoveFactory {
             case "SOFT-BOILED": {
                 SecondaryEffect secondaryEffect = new SecondaryRecovery(100, true);
                 move = new Move(name, Type.NORMAL, 0, 100, 10, 0, secondaryEffect);
+                break;
+            }
+            case "SUBMISSION": {
+                SecondaryEffect secondaryEffect = new SecondaryRecoil(100, true);
+                move = new Move(name, Type.FIGHTING, 80, 80, 25, 0, secondaryEffect);
                 break;
             }
             case "SURF": {
