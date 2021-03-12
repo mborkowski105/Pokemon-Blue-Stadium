@@ -32,6 +32,8 @@ public class Pokemon {
     private Status status2;
     private int status2Counter;
 
+    private boolean hyperBeamRecharge;
+
     private List<Move> moves;
 
 //    /**
@@ -70,6 +72,8 @@ public class Pokemon {
         this.status1Counter = 0;
         this.status2 = Status.HEALTHY;
         this.status2Counter = 0;
+
+        this.hyperBeamRecharge = false;
     }
 
     public String getSpecies() {
@@ -258,6 +262,18 @@ public class Pokemon {
     }
     protected void resetStatus2Counter() {
         status2Counter = 0;
+    }
+
+    public boolean getHyperBeamRecharge(){
+        return hyperBeamRecharge;
+    }
+
+    public void setHyperBeamRecharge(){
+        hyperBeamRecharge = true;
+    }
+
+    public void resetHyperBeamRecharge(){
+        hyperBeamRecharge = false;
     }
 
     protected Move getMove1() {

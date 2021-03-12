@@ -77,6 +77,10 @@ public abstract class PokemonFactory {
                 pokemon = new Pokemon(species, Type.NORMAL, null, 703, 108, 108, 308, 198, 50, move1, move2, move3, move4);
                 break;
             }
+            case "STARMIE": {
+                pokemon = new Pokemon(species, Type.WATER, Type.PSYCHIC,323,248, 268, 298, 328, 115, move1, move2, move3, move4);
+                break;
+            }
             case "JYNX": {
                 pokemon = new Pokemon(species, Type.ICE, Type.PSYCHIC, 333, 198, 168, 288, 288, 95, move1, move2, move3, move4);
                 break;
@@ -87,10 +91,6 @@ public abstract class PokemonFactory {
             }
             case "MAGMAR": {
                 pokemon = new Pokemon(species, Type.FIRE, null, 333, 288, 212, 268, 284, 93, move1, move2, move3, move4);
-                break;
-            }
-            case "STARMIE": {
-                pokemon = new Pokemon(species, Type.WATER, Type.PSYCHIC,323,248, 268, 298, 328, 115, move1, move2, move3, move4);
                 break;
             }
             case "GYARADOS": {

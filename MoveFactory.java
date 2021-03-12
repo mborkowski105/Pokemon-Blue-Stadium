@@ -56,6 +56,11 @@ public abstract class MoveFactory {
                 move = new Move(name, Type.WATER, 120, 80, 5, 0, null);
                 break;
             }
+            case "HYPER BEAM": {
+                SecondaryEffect secondaryEffect = new SecondaryHyperBeam(100, false);
+                move = new Move(name, Type.NORMAL, 150, 90, 5, 0, secondaryEffect);
+                break;
+            }
             case "HYPNOSIS": {
                 SecondaryEffect secondaryEffect = new SecondaryStatus(100, false, Status.SLEEP);
                 move = new Move(name, Type.PSYCHIC, 0, 60, 20, 0, secondaryEffect);

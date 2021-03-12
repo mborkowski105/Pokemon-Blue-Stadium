@@ -175,6 +175,7 @@ public class Battle {
                 opponentPokemon.setStatus1(status);
                 if (status == Status.SLEEP){
                     System.out.println(opponentPokemon.getSpecies() + " was put to SLEEP!");
+                    opponentPokemon.resetHyperBeamRecharge();
                 }
                 else if (status == Status.POISON){
                     System.out.println(opponentPokemon.getSpecies() + " was POISONED!");
@@ -184,6 +185,7 @@ public class Battle {
                 }
                 else if (status == Status.FREEZE){
                     System.out.println(opponentPokemon.getSpecies() + " was FROZEN solid!");
+                    opponentPokemon.resetHyperBeamRecharge();
                 }
                 else if (status == Status.PARALYSIS){
                     System.out.println(opponentPokemon.getSpecies() + " was PARALYZED! It may not be able to attack!");
@@ -268,13 +270,23 @@ public class Battle {
                 System.out.println(activePokemon.getSpecies() + " is already at full health!");
             }
         }
+
+        //Hyper Beam
+        else if (move.getSecondaryEffect() instanceof SecondaryHyperBeam){
+            activePokemon.setHyperBeamRecharge();
+        }
     }
 
     // returns false if the Pokemon passed in is determined unable to attack
     public boolean runPreAttackTasks(Pokemon pokemon){
         //Check for sleep, increment sleep counter if Pokemon remains asleep, or wake the Pokemon up
         //I'm following Stadium rules rather than original R/B/Y rules here - 3 (or 4) turn max for sleep, 1 in 3 chance of waking up, cannot attack same turn
-        if (pokemon.getStatus1() == Status.SLEEP){
+        if (pokemon.getHyperBeamRecharge() == true){
+            System.out.println(pokemon.getSpecies() + " needs to recharge!");
+            pokemon.resetHyperBeamRecharge();
+            return false;
+        }
+        else if (pokemon.getStatus1() == Status.SLEEP){
             if (pokemon.getStatus1Counter() == 3 || Math.random() * 100.0 > 66.6){
                 System.out.println(pokemon.getSpecies() + " woke up!");
                 pokemon.setStatus1(Status.HEALTHY);
@@ -328,7 +340,6 @@ public class Battle {
     }
 
     public void runPostAttackTasks(Pokemon activePokemon, Move move, Pokemon opponentPokemon){
-
         if (activePokemon.getStatus1() == Status.POISON){
             System.out.println(activePokemon.getSpecies() + "'s hurt by POISON!");
             activePokemon.damage(activePokemon.getHp() / 16);

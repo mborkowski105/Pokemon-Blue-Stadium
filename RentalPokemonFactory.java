@@ -65,7 +65,7 @@ public abstract class RentalPokemonFactory {
                 break;
             }
             case "STARMIE": {
-                pokemon = PokemonFactory.createPokemon("STARMIE", "SURF", "THUNDERBOLT", "RECOVER", "THUNDER WAVE");
+                pokemon = PokemonFactory.createPokemon("STARMIE", "SURF", "PSYCHIC", "RECOVER", "THUNDER WAVE");
                 break;
             }
             case "JYNX": {
@@ -74,6 +74,10 @@ public abstract class RentalPokemonFactory {
             }
             case "ELECTABUZZ": {
                 pokemon = PokemonFactory.createPokemon("ELECTABUZZ", "THUNDERBOLT", "THUNDER WAVE", "PSYCHIC", "SEISMIC TOSS");
+                break;
+            }
+            case "GYARADOS": {
+                pokemon = PokemonFactory.createPokemon("GYARADOS", "HYPER BEAM", "HYDRO PUMP", "ICE BEAM", "THUNDERBOLT");
                 break;
             }
             case "VAPOREON": {
