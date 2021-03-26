@@ -3,7 +3,7 @@ package personalproject.example.pbs.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import personalproject.example.pbs.dao.TrainerDao;
-import personalproject.example.pbs.models.Trainer;
+import personalproject.example.pbs.model.Trainer;
 
 import java.util.List;
 

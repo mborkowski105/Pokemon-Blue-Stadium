@@ -1,7 +1,7 @@
 package personalproject.example.pbs.dao;
 
 import org.springframework.stereotype.Repository;
-import personalproject.example.pbs.models.Trainer;
+import personalproject.example.pbs.model.Trainer;
 
 import java.util.List;
 import java.util.ArrayList;

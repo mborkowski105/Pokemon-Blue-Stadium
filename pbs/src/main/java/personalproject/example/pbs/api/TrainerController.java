@@ -2,7 +2,7 @@ package personalproject.example.pbs.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import personalproject.example.pbs.models.Trainer;
+import personalproject.example.pbs.model.Trainer;
 import personalproject.example.pbs.service.TrainerService;
 import java.util.List;
 
